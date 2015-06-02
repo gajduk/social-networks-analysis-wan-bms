@@ -1,0 +1,4 @@
+data/social/wan/wanedge_list_layer0.txt;Close Friends;data/social/wan/wansocial_layout.txt
+data/social/wan/wanedge_list_layer1.txt;Friends;data/social/wan/wansocial_layout.txt
+data/social/wan/wanedge_list_layer2.txt;Close Facebook;data/social/wan/wansocial_layout.txt
+data/social/wan/wanedge_list_layer3.txt;Facebook;data/social/wan/wansocial_layout.txt

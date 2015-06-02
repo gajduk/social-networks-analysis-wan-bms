@@ -185,30 +185,29 @@ def scatterPlotForMetrics(g1,g2,attribute):
     plt.xlim(min(x+y),max(x+y))
     plt.ylim(min(x+y),max(x+y))
     plt.title(attribute)
-    #------------------------
-    #     sample usage
-    #------------------------
-    #  graphs,node_mapping = load_4_layers()
-    #  graphs = addMetricsAsAttributes(graphs)
-    #  i = 1
-    #  for metric in metrics_dict:
-    #      plt.subplot(3,3,i)
-    #      scatterPlotForMetrics(graphs[2],graphs[5],metric)
-    #      i += 1
-    #  plt.show()
- 
-def main():
-    graphs,node_mapping = load_4_layers("bms")
+
+def visualizeMetrics(dataset="wan",save_to_file=False):
+    graphs,node_mapping = load_4_layers("wan")
     graphs = addMetricsAsAttributes(graphs)
-    #for key in metrics_dict:
-    #    plt.figure()
-    #    drawGraphs(graphs,key,False,True)
     i = 1
+    if save_to_file: 
+        plt.figure(num=None, figsize=(15, 10), dpi=150)
+    else:
+        plt.figure()
     for metric in metrics_dict:
         plt.subplot(3,3,i)
         scatterPlotForMetrics(graphs[2],graphs[5],metric)
         i += 1
-    plt.show()
+    if save_to_file:
+        plt.savefig(dataset+'.png')
+    else:
+        plt.show()
+    for key in metrics_dict:
+        plt.figure()
+        drawGraphs(graphs,key,False,save_to_file)
+    
+def main():
+    visualizeMetrics("bms")
     
 if __name__ == "__main__"    :
     main()

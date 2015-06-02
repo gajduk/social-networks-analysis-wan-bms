@@ -1,0 +1,4 @@
+data/social/wan_bez15/wan_bez15edge_list_layer0.txt;Close Friends;data/social/wan_bez15/wan_bez15social_layout.txt
+data/social/wan_bez15/wan_bez15edge_list_layer1.txt;Friends;data/social/wan_bez15/wan_bez15social_layout.txt
+data/social/wan_bez15/wan_bez15edge_list_layer2.txt;Close Facebook;data/social/wan_bez15/wan_bez15social_layout.txt
+data/social/wan_bez15/wan_bez15edge_list_layer3.txt;Facebook;data/social/wan_bez15/wan_bez15social_layout.txt

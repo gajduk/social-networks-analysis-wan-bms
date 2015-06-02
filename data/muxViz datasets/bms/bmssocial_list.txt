@@ -1,0 +1,4 @@
+data/social/bms/bmsedge_list_layer0.txt;Close Friends;data/social/bms/bmssocial_layout.txt
+data/social/bms/bmsedge_list_layer1.txt;Friends;data/social/bms/bmssocial_layout.txt
+data/social/bms/bmsedge_list_layer2.txt;Close Facebook;data/social/bms/bmssocial_layout.txt
+data/social/bms/bmsedge_list_layer3.txt;Facebook;data/social/bms/bmssocial_layout.txt

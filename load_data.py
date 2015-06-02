@@ -59,7 +59,8 @@ def getTestGraph2():
        
     
 def drawGraphs(graphs,color_attribute=None,aggregated=False,save_to_file=False,min_size=10,max_size=100):
-    plt.figure(num=None, figsize=(15, 10), dpi=150)
+    if save_to_file:
+        plt.figure(num=None, figsize=(15, 10), dpi=150)
     if not color_attribute is None:
         plt.suptitle(color_attribute)
     pos = nx.spring_layout(graphs[6],iterations=7,k=.3)
