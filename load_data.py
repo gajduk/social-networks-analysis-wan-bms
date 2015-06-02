@@ -1,6 +1,7 @@
 import os,sys,random
 import matplotlib.pyplot as plt
 import networkx as nx
+import numpy as np
 
 def load_4_layers(dataset="wan",aggregated=False):
     path = "data\\wan.csv"
@@ -57,7 +58,8 @@ def getTestGraph2():
     return g
        
     
-def drawGraphs(graphs,color_attribute=None,aggregated=False):
+def drawGraphs(graphs,color_attribute=None,aggregated=False,save_to_file=False,min_size=10,max_size=100):
+    plt.figure(num=None, figsize=(15, 10), dpi=150)
     if not color_attribute is None:
         plt.suptitle(color_attribute)
     pos = nx.spring_layout(graphs[6],iterations=7,k=.3)
@@ -70,15 +72,21 @@ def drawGraphs(graphs,color_attribute=None,aggregated=False):
         if color_attribute == None:
             nx.draw(graph,pos,node_size=10,edgelist=[])
         else:
-            nx.draw(graph,pos,node_size=[v+10 for v in graph.graph[color_attribute]],edgelist=[],node_color=graph.graph[color_attribute])
+            node_weights = np.array(graph.graph[color_attribute])
+            max_weight = max(node_weights)*1.0
+            min_weight = min(node_weights)*1.0
+            node_sizes = min_size+(node_weights-min_weight)/(max_weight-min_weight)*(max_size-min_size)
+            nx.draw(graph,pos,node_size=node_sizes,edgelist=[],node_color=graph.graph[color_attribute])
         nx.draw_networkx_edges(graph,pos,alpha=0.1,arrows=False,edge_color =[[.6,.6,.6]]*graph.number_of_edges())
         #nx.draw_networkx_labels(graph,pos,{i:str(i) for i in range(graph.number_of_nodes())},font_size=16)
         plt.title(graph.graph["title"])
         i += 1
         if not aggregated and i > 6:
             break
-    plt.show()
-        
+    if save_to_file:
+        plt.savefig('{0}_{1}_{2}.png'.format(graphs[0].graph['title'][:3],color_attribute,str(aggregated)))
+    else:
+        plt.show()
 
 
 def main():

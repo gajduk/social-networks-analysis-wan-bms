@@ -185,15 +185,24 @@ def scatterPlotForMetrics(g1,g2,attribute):
     plt.xlim(min(x+y),max(x+y))
     plt.ylim(min(x+y),max(x+y))
     plt.title(attribute)
+    #------------------------
+    #     sample usage
+    #------------------------
+    #  graphs,node_mapping = load_4_layers()
+    #  graphs = addMetricsAsAttributes(graphs)
+    #  i = 1
+    #  for metric in metrics_dict:
+    #      plt.subplot(3,3,i)
+    #      scatterPlotForMetrics(graphs[2],graphs[5],metric)
+    #      i += 1
+    #  plt.show()
  
 def main():
-    # g = getTestGraph1()
-    # print ["%.2f" %value for key,value in calcPopIn(g)[0].iteritems()]
-    # print ["%.2f" %value for key,value in calcPopOut(g)[0].iteritems()]
-    # print ["%.2f" %value for key,value in calcActOut(g)[0].iteritems()]
-    # print ["%.2f" %value for key,value in calcActIn(g)[0].iteritems()]
-    graphs,node_mapping = load_4_layers()
+    graphs,node_mapping = load_4_layers("bms")
     graphs = addMetricsAsAttributes(graphs)
+    #for key in metrics_dict:
+    #    plt.figure()
+    #    drawGraphs(graphs,key,False,True)
     i = 1
     for metric in metrics_dict:
         plt.subplot(3,3,i)
