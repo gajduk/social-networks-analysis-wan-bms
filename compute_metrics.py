@@ -1,6 +1,5 @@
 import os,sys,random
 import networkx as nx
-from load_data import *
        
 def calcTransTrip(g):
     res = {}
@@ -174,41 +173,3 @@ def addMetricsAsAttributes(graphs,metrics="all"):
                 for_node,avg = getMetric(g,metric)
                 g.graph[metric] = [for_node[key] for key in range(g.number_of_nodes())]
     return graphs
-
-def scatterPlotForMetrics(g1,g2,attribute):
-    x = g1.graph[attribute]
-    y = g2.graph[attribute]
-    plt.scatter(x,y)
-    plt.plot([min(x+y),max(x+y)],[min(x+y),max(x+y)],'k-',lw=2)
-    plt.xlabel(g1.graph["title"])
-    plt.ylabel(g2.graph["title"])
-    plt.xlim(min(x+y),max(x+y))
-    plt.ylim(min(x+y),max(x+y))
-    plt.title(attribute)
-
-def visualizeMetrics(dataset="wan",save_to_file=False):
-    graphs,node_mapping = load_4_layers("wan")
-    graphs = addMetricsAsAttributes(graphs)
-    i = 1
-    if save_to_file: 
-        plt.figure(num=None, figsize=(15, 10), dpi=150)
-    else:
-        plt.figure()
-    for metric in metrics_dict:
-        plt.subplot(3,3,i)
-        scatterPlotForMetrics(graphs[2],graphs[5],metric)
-        i += 1
-    if save_to_file:
-        plt.savefig(dataset+'.png')
-    else:
-        plt.show()
-    for key in metrics_dict:
-        plt.figure()
-        drawGraphs(graphs,key,False,save_to_file)
-    
-def main():
-    visualizeMetrics("bms")
-    
-if __name__ == "__main__"    :
-    main()
-    
