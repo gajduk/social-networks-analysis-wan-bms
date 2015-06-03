@@ -2,7 +2,7 @@ from visualization import *
 
 
 def main():
-    visualizeMetrics()
+    visualizeAllMetricsForGraphs(dataset="wan",network="both",save_to_file=True)
     
 
 if __name__ == "__main__"    :
