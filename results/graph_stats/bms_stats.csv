@@ -1,0 +1,8 @@
+bms,Diameter,# edges,Reciprocity,# Edges in GC,# Nodes in GC,Avg. degree,Assortativity,Avg. path length,# nodes
+strong real,14,717,0.59,630,122,4.22,0.43,4.63,170
+weak real,9,823,0.25,693,135,4.84,0.03,3.86,170
+real,7,1528,0.58,1402,150,8.99,0.24,2.99,170
+strong facebook,14,451,0.62,319,87,2.65,0.25,5.20,170
+weak facebook,9,845,0.31,742,138,4.97,0.17,3.78,170
+facebook,7,1286,0.56,1192,150,7.56,0.26,3.25,170
+aggregated,7,1600,0.60,1487,153,9.41,0.19,2.94,170
