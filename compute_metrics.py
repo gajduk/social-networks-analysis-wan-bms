@@ -1,5 +1,12 @@
 import os,sys,random
 import networkx as nx
+
+def inDeg(g):
+    return g.in_degree(),5
+
+    
+def outDeg(g):
+    return g.out_degree(),5
        
 def calcTransTrip(g):
     res = {}
@@ -152,8 +159,9 @@ def calcActOut(g):
         res[i] = c_i
     return res,avg_c*1.0/g.number_of_nodes() 
 
-metrics_dict = {"Transitivity Triplets":calcTransTrip,"Three Cycles":calcThreeCycles,"Balance":calcBalance,\
-                "Popularity Ingoing":calcPopIn,"Popularity Outgoing":calcPopOut,"Activity Ingoing":calcActIn,"Activity Outgoing":calcActOut}
+metrics_dict = {"Transitivity Triplets":calcTransTrip,"Three Cycles":calcThreeCycles,"Balance":calcBalance,"In degree":inDeg,\
+                "Popularity Ingoing":calcPopIn,"Popularity Outgoing":calcPopOut,"Activity Ingoing":calcActIn,\
+                "Out degree":outDeg,"Activity Outgoing":calcActOut}
 
 def getMetric(g,metric="Trans Trip"):
     if metric in metrics_dict:

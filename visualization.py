@@ -44,19 +44,22 @@ def visualizeMetrics(dataset="wan",metrics="all",save_to_file=False):
 
 def getSubplotRowsAndCols(number_of_subplots):
     rows,cols = 1,2
-    if number_of_subplots > 12:
-        rows,cols = 4,4
-    else:
-        if number_of_subplots > 8:
-            rows,cols = 3,4
+    if number_of_subplots > 16:
+        rows,cols = 5,4
+    else:  
+        if number_of_subplots > 12:
+            rows,cols = 4,4
         else:
-            if number_of_subplots > 6:
-                rows,cols = 2,4
+            if number_of_subplots > 8:
+                rows,cols = 3,4
             else:
-                if number_of_subplots > 4:
-                    rows,cols = 2,3
+                if number_of_subplots > 6:
+                    rows,cols = 2,4
                 else:
-                    rows,cols = 2,2
+                    if number_of_subplots > 4:
+                        rows,cols = 2,3
+                    else:
+                        rows,cols = 2,2
     return rows,cols
         
 def visualizeAllMetricsForGraphs(dataset="wan",network="real",metrics="all",save_to_file=False,min_size=10,max_size=100):
@@ -91,8 +94,12 @@ def visualizeAllMetricsForGraphs(dataset="wan",network="real",metrics="all",save
         for graph in [graphs[idx] for idx in graph_idxs]:
             plt.subplot(rows,cols,i)
             node_weights = np.array(graph.graph[color_attribute])
+            avg_weight = sum(node_weights)*1.0/node_weights.size
+            node_weights[node_weights>avg_weight*2] = avg_weight*2
             max_weight = max(node_weights)*1.0
             min_weight = min(node_weights)*1.0
+            
+            print avg_weight,max_weight,min_weight
             node_sizes = min_size+(node_weights-min_weight)/(max_weight-min_weight)*(max_size-min_size)
             nx.draw(graph,pos,node_size=node_sizes,edgelist=[],node_color=graph.graph[color_attribute])
             nx.draw_networkx_edges(graph,pos,alpha=0.1,arrows=False,edge_color =[[.6,.6,.6]]*graph.number_of_edges())
