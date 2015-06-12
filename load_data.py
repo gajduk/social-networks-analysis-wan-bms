@@ -3,32 +3,40 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 
-def load_4_layers(dataset="wan",aggregated=False):
+def load_4_layers(dataset="wan",aggregated=False,only_include_nodes_who_participated=True):
     path = "data\\wan.csv"
     if dataset == "bms":
         path = "data\\bms.csv"
     node_mapping = {}
     count = 0
-    graphs = [nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph()]
-    descr = ["strong real","weak real","strong facebook","weak facebook","real","facebook","aggregated"]
+    graphs = [nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph()]
+    descr = ["strong OFFline","weak OFFline","strong ONline","weak ONline","OFFline","ONline","strong","weak","aggregated"]
+    add_to = {1:[0,4,6,8],2:[1,4,7,8],3:[2,5,6,8],4:[3,5,7,8]}
+    count_out = {}
     with open(path,"r") as f:
         for line in f:
             s_line = line.split(",")
             from_node = int(s_line[0])
             to_node = int(s_line[2])
+            count_out[from_node] = 1
+            
+    with open(path,"r") as f:
+        for line in f:        
+            s_line = line.split(",")
+            from_node = int(s_line[0])
+            to_node = int(s_line[2])
+            if not to_node in count_out:
+                continue
             layer = int(s_line[1])
             count = _addNode(from_node,node_mapping,count,graphs)
             count = _addNode(to_node,node_mapping,count,graphs)
-            graphs[layer-1].add_edge(node_mapping[from_node],node_mapping[to_node])
-            if layer < 3:
-                graphs[4].add_edge(node_mapping[from_node],node_mapping[to_node])
-            else:
-                graphs[5].add_edge(node_mapping[from_node],node_mapping[to_node])
-            graphs[6].add_edge(node_mapping[from_node],node_mapping[to_node])
+            for g_idx in add_to[layer]:
+                graphs[g_idx].add_edge(node_mapping[from_node],node_mapping[to_node])
+            
     for i in range(len(graphs)):
         graphs[i].graph["title"] = dataset+" "+descr[i]
     res = graphs
-    graphs = [res[0],res[1],res[4],res[2],res[3],res[5],res[6]]
+    graphs = [res[0],res[1],res[4],res[2],res[3],res[5],res[6],res[7],res[8]]
     return (graphs,node_mapping)
     
 def _addNode(node,node_mapping,count,graphs):
@@ -58,8 +66,7 @@ def getTestGraph2():
     return g
        
 def main():
-    graphs,node_mapping = load_4_layers()
-    drawGraphs(graphs)
+    graphs,node_mapping = load_4_layers("bms")
     
 if __name__ == "__main__":
     main()

@@ -1,10 +1,11 @@
 import os,sys,random
 import networkx as nx
 import numpy as np
-from compute_metrics import *
+from compute_metrics_single_graph import *
+from compute_metrics_multiplex import *
 from load_data import *
 
-save_fig_size = (15, 10)
+save_fig_size = (25, 20)
 save_fig_dpi = 150
 
 def scatterPlotForMetrics(g1,g2,attribute):
@@ -41,6 +42,56 @@ def visualizeMetrics(dataset="wan",metrics="all",save_to_file=False):
     for key in metrics:
         plt.figure()
         drawGraphs(graphs,key,False,save_to_file)
+        
+prev_pos = None        
+        
+def visualizeMetricMutliplex(dataset="wan",metric="Overlapping index",save_to_file=False,min_size=10,max_size=60):
+    global prev_pos
+    graphs,node_mapping = load_4_layers(dataset)
+    graph_pairs = graph_combinations+[(g2,g1) for g1,g2 in graph_combinations]+[(i,i) for i in range(9)]
+    addMetricsAsAttributesMultiplex(graphs,graph_pairs)
+    if save_to_file: 
+        plt.figure(num=None, figsize=save_fig_size, dpi=save_fig_dpi)
+    else:
+        plt.figure()
+    plt.suptitle(dataset)
+    if prev_pos is None:
+        pos = nx.spring_layout(graphs[8],iterations=7,k=.25)
+        prev_pos = pos
+    else:
+        pos = prev_pos
+    max_weight = -100000
+    min_weight = 100000
+    
+    for g1,g2 in graph_pairs:
+        graph = graphs[g1]
+        color_attribute = getMetricString(metric,graphs[g1],graphs[g2])
+        
+        node_weights = np.array(graph.graph[color_attribute])
+        avg_weight = sum(node_weights)*1.0/node_weights.size
+        node_weights[node_weights>avg_weight*2] = avg_weight*2
+        max_weight = max(max_weight,max(node_weights)*1.0)
+        min_weight = min(min_weight,min(node_weights)*1.0)
+        
+    i = 1    
+    for g1,g2 in graph_pairs:
+        graph = graphs[g1]
+        color_attribute = getMetricString(metric,graphs[g1],graphs[g2])
+        plt.subplot(5,6,i)
+        node_weights = np.array(graph.graph[color_attribute])
+        avg_weight = sum(node_weights)*1.0/node_weights.size
+        node_weights[node_weights>avg_weight*2] = avg_weight*2
+        
+        node_sizes = min_size+(node_weights-min_weight)/(max_weight-min_weight)*(max_size-min_size)
+        nx.draw(graph,pos,node_size=node_sizes,edgelist=[],node_color=graph.graph[color_attribute])
+        nx.draw_networkx_edges(graph,pos,alpha=0.1,arrows=False,edge_color =[[.6,.6,.6]]*graph.number_of_edges())
+        i += 1
+        plt.title(color_attribute)
+        
+    if save_to_file:
+        plt.savefig(dataset+"_"+metric+'.png')
+    else:
+        plt.show()
 
 def getSubplotRowsAndCols(number_of_subplots):
     rows,cols = 1,2
@@ -122,10 +173,7 @@ def drawGraphs(graphs,color_attribute=None,aggregated=False,save_to_file=False,m
     pos = nx.spring_layout(graphs[6],iterations=7,k=.3)
     i = 1
     for graph in graphs:
-        if aggregated:
-            plt.subplot(3,3,i)
-        else:
-            plt.subplot(2,3,i)            
+        plt.subplot(3,3,i)           
         if color_attribute == None:
             nx.draw(graph,pos,node_size=10,edgelist=[])
         else:
@@ -138,7 +186,7 @@ def drawGraphs(graphs,color_attribute=None,aggregated=False,save_to_file=False,m
         
         plt.title(graph.graph["title"])
         i += 1
-        if not aggregated and i > 6:
+        if not aggregated and i > 7:
             break
     if save_to_file:
         plt.savefig('{0}_{1}_{2}.png'.format(graphs[0].graph['title'][:3],color_attribute,str(aggregated)))

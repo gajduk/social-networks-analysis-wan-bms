@@ -31,12 +31,9 @@ def nodesInGiantComponent(g):
     
 def edgesInGiantComponent(g):
     return getGiantComponent(g).number_of_edges()
-    
 
 def assortativity(g):
     return nx.degree_assortativity_coefficient(g,x="in",y="in")
-
-
     
 stats = { "# nodes":numNodes, "# edges":numEdges, "Avg. degree":avgDeg , "Reciprocity":reciprocity, "Diameter":diameter,\
           "Avg. path length":avgPathLen, "# Nodes in GC":nodesInGiantComponent,"# Edges in GC":edgesInGiantComponent,\
@@ -60,3 +57,4 @@ def getStasForDataset(dataset="wan"):
     for g in graphs:
         res += "\n"+getStatsForGraph(g)
     return res   
+
