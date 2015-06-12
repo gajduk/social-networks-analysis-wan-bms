@@ -4,9 +4,9 @@ import networkx as nx
 import numpy as np
 
 def load_4_layers(dataset="wan",aggregated=False,only_include_nodes_who_participated=True):
-    path = "data\\wan.csv"
+    path = "..\\data\\wan.csv"
     if dataset == "bms":
-        path = "data\\bms.csv"
+        path = "..\\data\\bms.csv"
     node_mapping = {}
     count = 0
     graphs = [nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph()]

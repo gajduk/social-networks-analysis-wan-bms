@@ -21,6 +21,8 @@ def maxOut(g):
 def maxIn(g):
     return max([inDeg(g,i) for i in range(g.number_of_nodes())])
   
+  
+  
 """
 return {j: i f j} where f is in_edges or out_edges functions for a graph
 
@@ -108,23 +110,36 @@ returns (i->j g1) * (j->h g1) * (h->i g2)
 def threeCycles(g1,g2,i):
     return JS(Wi(i,g1.out_edges,g1.out_edges),_n(i,g2.in_edges))
 
-def PopIn(g1,g2,i):
+def PopInOld(g1,g2,i):
     res = 0.0
     for j in _n(i,g1.out_edges):
         res += math.sqrt(len(_n(j,g2.in_edges)))
     return res/maxOut(g1)/math.sqrt(maxIn(g2))
-
-def PopOut(g1,g2,i):
+    
+def PopIn(g1,g2,i):
+    return len(Wi(i,g1.out_edges,g2.in_edges))
+    
+def PopOutOld(g1,g2,i):
     res = 0.0
     for j in _n(i,g1.out_edges):
         res += math.sqrt(len(_n(j,g2.out_edges)))
     return res/maxOut(g1)/math.sqrt(maxOut(g2))   
     
-def ActIn(g1,g2,i):
+
+def PopOut(g1,g2,i):
+    return len(Wi(i,g1.out_edges,g2.out_edges))  
+    
+def ActInOld(g1,g2,i):
     return 1.0*len(_n(i,g1.out_edges))*math.sqrt(len(_n(i,g2.in_edges)))/maxOut(g1)/math.sqrt(maxIn(g2))
 
+def ActIn(g1,g2,i):
+    return len(Wi(i,g1.in_edges,g2.in_edges)) 
+    
+def ActOutOld(g1,g2,i):
+    return 1.0*len(_n(i,g1.out_edges))*math.sqrt(len(_n(i,g2.out_edges)))/maxOut(g1)/math.sqrt(maxOut(g2)) 
+    
 def ActOut(g1,g2,i):
-    return 1.0*len(_n(i,g1.out_edges))*math.sqrt(len(_n(i,g2.out_edges)))/maxOut(g1)/math.sqrt(maxOut(g2))  
+    return len(Wi(i,g1.in_edges,g2.out_edges))  
    
 """
 For each node in nodes calculates the multiplex metrics metric for graphs g1 and g2
