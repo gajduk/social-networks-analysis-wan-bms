@@ -1,5 +1,6 @@
 import networkx as nx
 from load_data import *
+from compute_metrics_multiplex import *
 
 def numNodes(g):
     return g.number_of_nodes()
@@ -51,10 +52,52 @@ def getStatsForGraph(g):
         res += ","+str(stats[stat](g))
     return res
     
+def getStatsFromAttribute(graphs):
+    attributes = set()
+    for i in range(len(graphs)):
+        g = graphs[i]
+        for attribute in g.graph:
+            if str(attribute).startswith("Global") and \
+               str(attribute).endswith(g.graph["title"][4:]):
+                short_name = str(attribute)[7:str(attribute).index('\n')]
+                attributes.add(short_name)
+        
+        
+    res = g.graph["title"][:3]
+    for attribute in attributes:
+        res += ","+str(attribute)
+    res += "\n"
+    for i in range(len(graphs)):
+        g = graphs[i]
+        res += g.graph["title"][4:]
+        for attribute1 in attributes:
+            for attribute in g.graph:
+                if str(attribute).startswith("Global") and \
+                    str(attribute).endswith(g.graph["title"][4:]):
+                    short_name = str(attribute)[7:str(attribute).index('\n')]
+                    if short_name == attribute1:
+                        res += ",{0:.3f}".format(g.graph[attribute])
+                        break
+                     
+        res += "\n"
+    return res
+    
 def getStasForDataset(dataset="wan"):
     graphs,node_mapping = load_4_layers(dataset)
-    res = getHeader()
-    for g in graphs:
-        res += "\n"+getStatsForGraph(g)
-    return res   
+    metrics = metrics_dict_multiplex.copy()
+    del metrics["Overlapping Index"]
+    addMetricsAsAttributesMultiplex(graphs,[(i,i) for i in range(len(graphs))],metrics)
+    
+    res = getStatsFromAttribute(graphs)
+    
+    return res 
+
+def main():
+    with open("wan_single_graph_metrics.csv","w") as pout:
+        pout.write(getStasForDataset("wan"))
+    with open("bms_single_graph_metrics.csv","w") as pout:
+        pout.write(getStasForDataset("bms"))
+    
+if __name__ == "__main__":
+    main()
 

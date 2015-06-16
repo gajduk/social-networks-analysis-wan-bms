@@ -22,7 +22,6 @@ def maxIn(g):
     return max([inDeg(g,i) for i in range(g.number_of_nodes())])
   
   
-  
 """
 return {j: i f j} where f is in_edges or out_edges functions for a graph
 
@@ -110,37 +109,21 @@ returns (i->j g1) * (j->h g1) * (h->i g2)
 def threeCycles(g1,g2,i):
     return JS(Wi(i,g1.out_edges,g1.out_edges),_n(i,g2.in_edges))
 
-def PopInOld(g1,g2,i):
+"""
+returns the balance : The extent to which two actors make the same choices can be expressed simply as the number of friends (outgoing choices) that they have in common:
+"""    
+def balance(g1,g2,i):
     res = 0.0
-    for j in _n(i,g1.out_edges):
-        res += math.sqrt(len(_n(j,g2.in_edges)))
-    return res/maxOut(g1)/math.sqrt(maxIn(g2))
+    for k in range(g1.number_of_nodes()):
+        if g1.has_edge(i,k):
+            #print _n(i,g1.out_edges)
+            #print [e for e in _n(k,g2.out_edges) if e != i]
+            #print JS(_n(i,g1.out_edges),[e for e in _n(k,g2.out_edges) if e != i])
+            #print ""
+            res += JS(_n(i,g1.out_edges),[e for e in _n(k,g2.out_edges) if e != i])
+    return res*1.0/(g1.number_of_nodes()-1)       
+        
     
-def PopIn(g1,g2,i):
-    return len(Wi(i,g1.out_edges,g2.in_edges))
-    
-def PopOutOld(g1,g2,i):
-    res = 0.0
-    for j in _n(i,g1.out_edges):
-        res += math.sqrt(len(_n(j,g2.out_edges)))
-    return res/maxOut(g1)/math.sqrt(maxOut(g2))   
-    
-
-def PopOut(g1,g2,i):
-    return len(Wi(i,g1.out_edges,g2.out_edges))  
-    
-def ActInOld(g1,g2,i):
-    return 1.0*len(_n(i,g1.out_edges))*math.sqrt(len(_n(i,g2.in_edges)))/maxOut(g1)/math.sqrt(maxIn(g2))
-
-def ActIn(g1,g2,i):
-    return len(Wi(i,g1.in_edges,g2.in_edges)) 
-    
-def ActOutOld(g1,g2,i):
-    return 1.0*len(_n(i,g1.out_edges))*math.sqrt(len(_n(i,g2.out_edges)))/maxOut(g1)/math.sqrt(maxOut(g2)) 
-    
-def ActOut(g1,g2,i):
-    return len(Wi(i,g1.in_edges,g2.out_edges))  
-   
 """
 For each node in nodes calculates the multiplex metrics metric for graphs g1 and g2
 Returns a dictionary with keys = nodes and values equal to the multiplex metric for the respective node
@@ -156,8 +139,7 @@ def _getMetricForNodesMultiplex(g1,g2,metric=overlapIndex,nodes="all"):
 
     
 metrics_dict_multiplex = {"Overlapping Index":overlapIndex,"Reciprocity":reciprocity,\
-    "Transitivity Triplets":transTrip,"Three Cycles":threeCycles,"Indegree Popularity":PopIn,\
-    "Outdegree Popularity":PopOut,"Indegree Activity":ActIn,"Outdegree Activity":ActOut}
+    "Transitivity Triplets":transTrip,"Three Cycles":threeCycles,"Balance":balance}
 
 global_metrics_dict = {}
 
@@ -177,7 +159,11 @@ The metric is calculated for all nodes in g1, using g1 and g2
 """
 def addMetricAsAttributeMultiplex(g1,g2,metric):
     for_node = getMetricMultiplex(g1,g2,metric)
-    g1.graph[getMetricString(metric,g1,g2)] = [for_node[key] for key in range(g1.number_of_nodes())]
+    l = [for_node[key] for key in range(g1.number_of_nodes())]
+    s = getMetricString(metric,g1,g2)
+    g1.graph[s] = l
+    global_value = reduce(lambda x, y: x + y, l) / len(l)
+    g1.graph["Global "+s] = global_value
         
 """
 Adds a list of metrics as attributes to the nodes in the corresponding graphs
@@ -193,7 +179,7 @@ def addMetricsAsAttributesMultiplex(graphs,graph_pairs,metrics="all"):
             for g1,g2 in graph_pairs:
                 addMetricAsAttributeMultiplex(graphs[g1],graphs[g2],metric)
     return graphs
-
+    
 def test():
     g1 = nx.DiGraph()
     g1.add_nodes_from(range(9))
