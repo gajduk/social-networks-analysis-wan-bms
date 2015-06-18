@@ -121,7 +121,9 @@ def balance(g1,g2,i):
             #print JS(_n(i,g1.out_edges),[e for e in _n(k,g2.out_edges) if e != i])
             #print ""
             res += JS(_n(i,g1.out_edges),[e for e in _n(k,g2.out_edges) if e != i])
-    return res*1.0/(g1.number_of_nodes()-1)       
+    if (len(_n(i,g1.out_edges))) == 0 :
+        return 1.0
+    return res*1.0/(len(_n(i,g1.out_edges)))       
         
     
 """
