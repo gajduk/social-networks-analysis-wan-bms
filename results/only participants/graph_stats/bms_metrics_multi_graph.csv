@@ -1,16 +1,3 @@
-bms,Three Cycles,Transitivity Triplets,Balance,Reciprocity,
-strong OFFline,0.249,0.33,0.289,0.474,
-weak OFFline,0.041,0.176,0.148,0.154,
-strong ONline,0.243,0.351,0.291,0.49,
-weak ONline,0.074,0.18,0.144,0.204,
-ONline,0.164,0.19,0.204,0.442,
-OFFline,0.162,0.194,0.22,0.467,
-strong,0.236,0.286,0.257,0.496,
-weak,0.094,0.16,0.126,0.278,
-aggregated,0.164,0.175,0.215,0.492,
-,,,,,
-Multiplex,,,,,
-,,,,,
 bms,Overlapping Index,Three Cycles,Transitivity Triplets,Balance,Reciprocity
 strong OFFline->strong ONline,0.568,0.206,0.211,0.268,0.447
 strong OFFline->weak ONline,0.189,0.116,0.144,0.208,0.139

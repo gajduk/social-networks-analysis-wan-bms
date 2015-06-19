@@ -44,11 +44,41 @@ def visualizeMetrics(dataset="wan",metrics="all",save_to_file=False):
         drawGraphs(graphs,key,False,save_to_file)
         
 prev_pos = None        
+
+def histogramMetricMultiplex(dataset="wan",metric="Overlapping index",save_to_file=False):
+    graphs,node_mapping = load_4_layers(dataset)
+    graph_pairs = graph_combinations+[(g2,g1) for g1,g2 in graph_combinations]+[(i,i) for i in range(len(graphs))]
+    addMetricsAsAttributesMultiplex(graphs,graph_pairs)
+    if save_to_file: 
+        plt.figure(num=None, figsize=save_fig_size, dpi=save_fig_dpi)
+    else:
+        plt.figure()
+    plt.suptitle(dataset+" "+metric)
+    
+    i = 1
+    for g1,g2 in graph_pairs:
+        graph = graphs[g1]
+        title = graphs[g1].graph["title"][4:]+"->"+graphs[g2].graph["title"][4:]
+        values = np.array(graph.graph[getMetricString(metric,graphs[g1],graphs[g2])])
+        weights = np.ones_like(values)/len(values)
+        plt.subplot(5,6,i)
+        # the histogram of the data
+        n, bins, patches = plt.hist(values, 20, facecolor='g', alpha=0.75,weights=weights)
+        plt.title(title)
+        plt.xlim([0.0,1.0])
+        plt.ylim([0.0,max(n)*1.2])
+        plt.grid(True)
+        plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
+        i += 1
+    if save_to_file:
+        plt.savefig(dataset+"_"+metric+'_hist.png')
+    else:
+        plt.show()
         
 def visualizeMetricMutliplex(dataset="wan",metric="Overlapping index",save_to_file=False,min_size=10,max_size=60):
     global prev_pos
     graphs,node_mapping = load_4_layers(dataset)
-    graph_pairs = graph_combinations+[(g2,g1) for g1,g2 in graph_combinations]+[(i,i) for i in range(9)]
+    graph_pairs = graph_combinations+[(g2,g1) for g1,g2 in graph_combinations]+[(i,i) for i in range(len(graphs))]
     addMetricsAsAttributesMultiplex(graphs,graph_pairs)
     if save_to_file: 
         plt.figure(num=None, figsize=save_fig_size, dpi=save_fig_dpi)

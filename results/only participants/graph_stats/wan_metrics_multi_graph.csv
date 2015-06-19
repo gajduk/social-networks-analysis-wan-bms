@@ -1,0 +1,19 @@
+wan,Overlapping Index,Three Cycles,Transitivity Triplets,Balance,Reciprocity
+strong OFFline->strong ONline,0.517,0.214,0.251,0.281,0.455
+strong OFFline->weak ONline,0.294,0.105,0.241,0.215,0.108
+weak OFFline->strong ONline,0.145,0.114,0.155,0.306,0.117
+weak OFFline->weak ONline,0.4,0.072,0.249,0.305,0.072
+OFFline->ONline,0.708,0.16,0.235,0.263,0.334
+strong OFFline->ONline,0.589,0.202,0.301,0.302,0.3
+weak OFFline->ONline,0.281,0.107,0.204,0.327,0.091
+OFFline->strong ONline,0.388,0.14,0.148,0.205,0.375
+OFFline->weak ONline,0.415,0.091,0.189,0.175,0.138
+strong ONline->strong OFFline,0.517,0.297,0.36,0.358,0.41
+weak ONline->strong OFFline,0.294,0.222,0.196,0.266,0.275
+strong ONline->weak OFFline,0.145,0.057,0.205,0.266,0.038
+weak ONline->weak OFFline,0.4,0.084,0.292,0.238,0.067
+ONline->OFFline,0.708,0.24,0.35,0.274,0.306
+ONline->strong OFFline,0.589,0.239,0.236,0.255,0.492
+ONline->weak OFFline,0.281,0.108,0.242,0.162,0.084
+strong ONline->OFFline,0.388,0.177,0.308,0.347,0.189
+weak ONline->OFFline,0.415,0.177,0.289,0.277,0.14

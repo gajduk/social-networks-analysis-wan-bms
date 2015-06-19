@@ -10,7 +10,7 @@ def load_4_layers(dataset="wan",aggregated=False,only_include_nodes_who_particip
     node_mapping = {}
     count = 0
     graphs = [nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph(),nx.DiGraph()]
-    descr = ["strong OFFline","weak OFFline","strong ONline","weak ONline","OFFline","ONline","strong","weak","aggregated"]
+    descr = ["strong OFF","weak OFF","strong ON","weak ON","OFF","ON","strong","weak","all"]
     add_to = {1:[0,4,6,8],2:[1,4,7,8],3:[2,5,6,8],4:[3,5,7,8]}
     count_out = {}
     with open(path,"r") as f:

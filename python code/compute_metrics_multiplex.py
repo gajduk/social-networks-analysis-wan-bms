@@ -182,6 +182,8 @@ def addMetricsAsAttributesMultiplex(graphs,graph_pairs,metrics="all"):
                 addMetricAsAttributeMultiplex(graphs[g1],graphs[g2],metric)
     return graphs
     
+    
+    
 def test():
     g1 = nx.DiGraph()
     g1.add_nodes_from(range(9))
