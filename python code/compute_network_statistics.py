@@ -82,17 +82,20 @@ def getStasForDataset(dataset="wan"):
     return res 
 
 def main():
-    with open("wan_graph_stats.csv","w") as pout:
-        graphs,node_mapping = load_4_layers("wan")
-        pout.write(getHeader())
-        for g in graphs:
-            pout.write("\n"+getStatsForGraph(g))
+    with open("wan_graph_stats1.csv","w") as pout:
+        pout.write(getStasForDataset("wan"))
+        #graphs,node_mapping = load_4_layers("wan")
+        #pout.write(getHeader())
+        #for g in graphs:
+           # pout.write("\n"+getStatsForGraph(g))
+            #
             
-    with open("bms_graph_stats.csv","w") as pout:
-        graphs,node_mapping = load_4_layers("bms")
-        pout.write(getHeader())
-        for g in graphs:
-            pout.write("\n"+getStatsForGraph(g))
+    with open("bms_graph_stats1.csv","w") as pout:
+        pout.write(getStasForDataset("bms"))
+        #graphs,node_mapping = load_4_layers("bms")
+       # pout.write(getHeader())
+        #for g in graphs:
+         #   pout.write("\n"+getStatsForGraph(g))
     
 if __name__ == "__main__":
     main()

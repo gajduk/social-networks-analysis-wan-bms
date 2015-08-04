@@ -4,7 +4,7 @@ import pylab as plt
 import math
 
 graph_combinations = [(0,3),(0,4),(1,3),(1,4),(2,5),(0,5),(1,5),(2,3),(2,4)]
-#graph_combinations = [(0,0),(1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8)]
+graph_combinations_self = [(0,0),(1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8)]
 
 def getMetricString(metric,g1,g2):
     return metric+"\n"+str(g1.graph['title'][4:])+"->"+str(g2.graph['title'][4:])
@@ -108,7 +108,87 @@ returns (i->j g1) * (j->h g1) * (h->i g2)
 """    
 def threeCycles(g1,g2,i):
     return JS(Wi(i,g1.out_edges,g1.out_edges),_n(i,g2.in_edges))
+    
+"""
+return
+    
+    S_j,h    i->j * j->h * h->i
+  ________________________________
+  
+    S_j,h,m  i->j * j->h * h->m
 
+"""
+def tc1(g1,g2,i):
+    A,B = 0.0,0.0
+    for j in _n(i,g1.out_edges):
+        for h in _n(j,g1.out_edges):
+            for m in _n(h,g1.out_edges):
+                A += 1.0
+    for j in _n(i,g2.out_edges):
+        for h in _n(j,g2.out_edges):
+            for m in _n(h,g2.out_edges):
+                if m == i:
+                    B += 1.0
+    if A == 0.0:
+        return 1.0
+    return B/A  
+
+"""
+return
+    
+   1/d_i^in * S_h h->i J(S_i^out,S_h^in)
+
+"""
+def tc2(g1,g2,i):
+    res = 0.0
+    for h in _n(i,g1.in_edges):
+        res += JS(_n(i,g1.out_edges),_n(h,g2.in_edges))
+    if len(_n(i,g1.in_edges)) == 0.0:
+        return 1.0
+    res /= len(_n(i,g1.in_edges))
+    return res
+    
+    
+"""
+return
+    
+    S_j,h    i->j * j->h * i->h
+  ________________________________
+  
+    S_j,h,m  i->j * j->h * m->h
+
+"""
+def tp1(g1,g2,i):
+    A,B = 0.0,0.0
+    for j in _n(i,g1.out_edges):
+        for h in _n(j,g1.out_edges):
+            for m in _n(h,g1.in_edges):
+                A += 1.0
+    for j in _n(i,g2.out_edges):
+        for h in _n(j,g2.out_edges):
+            for m in _n(h,g2.in_edges):
+                if m == i:
+                    B += 1.0
+    if A == 0.0:
+        return 1.0
+    return B/A  
+
+"""
+return
+    
+   1/d_i^out * S_j i->j J(S_i^out,S_j^out)
+
+"""
+def tp2(g1,g2,i):
+    res = 0.0
+    for j in _n(i,g1.out_edges):
+        res += JS(_n(i,g1.out_edges),_n(j,g2.out_edges))
+    if len(_n(i,g1.out_edges)) == 0.0:
+        return 1.0
+    res /= len(_n(i,g1.out_edges))
+    return res
+    
+    
 """
 returns the balance : The extent to which two actors make the same choices can be expressed simply as the number of friends (outgoing choices) that they have in common:
 """    
@@ -140,8 +220,13 @@ def _getMetricForNodesMultiplex(g1,g2,metric=overlapIndex,nodes="all"):
     return res
 
     
-metrics_dict_multiplex = {"Overlapping Index":overlapIndex,"Reciprocity":reciprocity,\
-    "Transitivity Triplets":transTrip,"Three Cycles":threeCycles,"Balance":balance}
+metrics_dict_multiplex = {"Overlapping Index":overlapIndex,"Reciprocity":reciprocity,"Balance":balance,\
+    "tp0":transTrip,"tp1":tp1,"tp2":tp2,\
+    "tc0":threeCycles,"tc1":tc1,"tc2":tc2}
+    
+metrics_dict_single = {"Reciprocity":reciprocity,"Balance":balance,\
+    "tp0":transTrip,"tp1":tp1,"tp2":tp2,\
+    "tc0":threeCycles,"tc1":tc1,"tc2":tc2}
 
 global_metrics_dict = {}
 
@@ -182,8 +267,7 @@ def addMetricsAsAttributesMultiplex(graphs,graph_pairs,metrics="all"):
                 addMetricAsAttributeMultiplex(graphs[g1],graphs[g2],metric)
     return graphs
     
-    
-    
+        
 def test():
     g1 = nx.DiGraph()
     g1.add_nodes_from(range(9))
@@ -198,8 +282,8 @@ def test():
     nx.draw(g1,with_labels=True)
     plt.subplot(1,2,2)
     nx.draw(g2,with_labels=True)
-    plt.show()
+    plt.show()  
     
     
 if __name__ == "__main__":
-    test()
+    saveMetricsAsCsv()

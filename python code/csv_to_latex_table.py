@@ -34,7 +34,10 @@ def table_from_csv(out_file,csv_file,caption="Caption"):
 
 
 def main():
-    table_from_csv("table.txt","""..\\results\\only participants\\graph_stats\\wan_metrics_single_graph.csv""")
+    table_from_csv("bms_single1.txt","""..\\results\\only participants\\graph_stats\\bms_single1.csv""")
+    table_from_csv("bms_multi1.txt","""..\\results\\only participants\\graph_stats\\bms_multi1.csv""")
+    table_from_csv("wan_single1.txt","""..\\results\\only participants\\graph_stats\\wan_single1.csv""")
+    table_from_csv("wan_multi1.txt","""..\\results\\only participants\\graph_stats\\wan_multi1.csv""")
 
 if __name__ == "__main__":
     main()
