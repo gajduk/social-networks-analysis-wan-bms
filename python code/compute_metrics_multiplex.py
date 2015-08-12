@@ -91,6 +91,20 @@ returns (i->j g1) * (i->j g2)
 def overlapIndex(g1,g2,i):
     return JS(_n(i,g1.out_edges),_n(i,g2.out_edges))
  
+ 
+"""
+returns (i->j g1) * (i->j g2)
+"""         
+def oi1(g1,g2,i):
+    return JS(_n(i,g1.out_edges),_n(i,g2.out_edges))
+    
+ 
+"""
+returns (i<-j g1) * (i<-j g2)
+"""         
+def oi2(g1,g2,i):
+    return JS(_n(i,g1.in_edges),_n(i,g2.in_edges))
+    
 """
 returns (i->j g1) * (j->i g2)
 """     
@@ -222,7 +236,7 @@ def _getMetricForNodesMultiplex(g1,g2,metric=overlapIndex,nodes="all"):
     
 metrics_dict_multiplex = {"Overlapping Index":overlapIndex,"Reciprocity":reciprocity,"Balance":balance,\
     "tp0":transTrip,"tp1":tp1,"tp2":tp2,\
-    "tc0":threeCycles,"tc1":tc1,"tc2":tc2}
+    "tc0":threeCycles,"tc1":tc1,"tc2":tc2,"oi1":oi1,"oi2":oi2}
     
 metrics_dict_single = {"Reciprocity":reciprocity,"Balance":balance,\
     "tp0":transTrip,"tp1":tp1,"tp2":tp2,\

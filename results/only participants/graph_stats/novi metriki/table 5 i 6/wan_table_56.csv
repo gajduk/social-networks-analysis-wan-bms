@@ -1,0 +1,13 @@
+wan,oi1,Reciprocity,oi2
+strong OFF->strong ON,0.517,0.455,0.470
+weak OFF->weak ON,0.400,0.072,0.401
+strong OFF->weak OFF,0.093,0.071,0.003
+strong ON->weak ON,0.102,0.062,0.001
+strong->weak,0.269,0.132,0.141
+OFF->ON,0.708,0.334,0.604
+strong ON->strong OFF,0.517,0.410,0.470
+weak ON->weak OFF,0.400,0.067,0.401
+weak OFF->strong OFF,0.093,0.177,0.003
+weak ON->strong ON,0.102,0.210,0.001
+weak->strong,0.269,0.249,0.141
+ON->OFF,0.708,0.306,0.604
