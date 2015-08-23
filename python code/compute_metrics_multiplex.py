@@ -82,7 +82,7 @@ def JS(s1,s2):
     temp1 = set(s1)
     temp2 = set(s2)
     if len(temp1|temp2) == 0:
-        return 1.0
+        return None
     return len(temp1&temp2)*1.0/len(temp1|temp2)
     
 """
@@ -144,7 +144,7 @@ def tc1(g1,g2,i):
                 if m == i:
                     B += 1.0
     if A == 0.0:
-        return 1.0
+        return None
     return B/A  
 
 """
@@ -158,7 +158,7 @@ def tc2(g1,g2,i):
     for h in _n(i,g1.in_edges):
         res += JS(_n(i,g1.out_edges),_n(h,g2.in_edges))
     if len(_n(i,g1.in_edges)) == 0.0:
-        return 1.0
+        return None
     res /= len(_n(i,g1.in_edges))
     return res
     
@@ -184,7 +184,7 @@ def tp1(g1,g2,i):
                 if m == i:
                     B += 1.0
     if A == 0.0:
-        return 1.0
+        return None
     return B/A  
 
 """
@@ -198,7 +198,7 @@ def tp2(g1,g2,i):
     for j in _n(i,g1.out_edges):
         res += JS(_n(i,g1.out_edges),_n(j,g2.out_edges))
     if len(_n(i,g1.out_edges)) == 0.0:
-        return 1.0
+        return None
     res /= len(_n(i,g1.out_edges))
     return res
     
@@ -216,7 +216,7 @@ def balance(g1,g2,i):
             #print ""
             res += JS(_n(i,g1.out_edges),[e for e in _n(k,g2.out_edges) if e != i])
     if (len(_n(i,g1.out_edges))) == 0 :
-        return 1.0
+        return None
     return res*1.0/(len(_n(i,g1.out_edges)))       
         
     
@@ -263,8 +263,14 @@ def addMetricAsAttributeMultiplex(g1,g2,metric):
     l = [for_node[key] for key in range(g1.number_of_nodes())]
     s = getMetricString(metric,g1,g2)
     g1.graph[s] = l
-    global_value = reduce(lambda x, y: x + y, l) / len(l)
-    g1.graph["Global "+s] = global_value
+    global_value = 0.0
+    count = 0.0
+    for x in for_node:
+        if x == None:
+            continue
+        count += 1.0
+        global_value += x
+    g1.graph["Global "+s] = global_value/count
         
 """
 Adds a list of metrics as attributes to the nodes in the corresponding graphs
