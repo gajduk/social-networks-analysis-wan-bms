@@ -43,8 +43,46 @@ def visualizeMetrics(dataset="wan",metrics="all",save_to_file=False):
         plt.figure()
         drawGraphs(graphs,key,False,save_to_file)
         
-prev_pos = None        
+prev_pos = None     
 
+def histogramMetricSingle(dataset="wan",save_to_file=True):
+    graphs,node_mapping = load_4_layers(dataset)
+    graph_pairs = [(i,i) for i in range(len(graphs))]
+    addMetricsAsAttributesMultiplex(graphs,graph_pairs)
+    metrics = {"Reciprocity":reciprocity,"tp1":tp1,"tp2":tp2,"tc1":tc1,"tc2":tc2}
+    addMetricsAsAttributesMultiplex(graphs,graph_pairs,metrics)
+    
+    for metric in metrics:
+    
+        if save_to_file: 
+            plt.figure(num=None, figsize=save_fig_size, dpi=save_fig_dpi)
+        else:
+            plt.figure()
+        i = 1
+        plt.suptitle(dataset+" "+metric, fontsize=36)
+        for g1,g2 in graph_pairs:
+            graph = graphs[g1]
+            title = graphs[g1].graph["title"][4:]
+            values = np.array(graph.graph[getMetricString(metric,graphs[g1],graphs[g2])])
+            weights = np.ones_like(values)/len(values)
+            plt.subplot(3,3,i)
+            # the histogram of the data
+            n, bins, patches = plt.hist(values, 20, facecolor='g', alpha=0.75,weights=weights)
+            plt.title(title, fontsize=26)
+            plt.xlim([0.0,1.0])
+            plt.ylim([0.0,max(n)*1.2])
+            plt.grid(True)
+            plt.xlabel(metric, fontsize=22)
+            plt.ylabel('Fraction of nodes', fontsize=22)
+            plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
+            i += 1
+        if save_to_file:
+            plt.savefig(dataset+"_"+metric+'_hist.png')
+        else:
+            plt.show()
+    
+    
+    
 def histogramMetricMultiplex(dataset="wan",metric="Overlapping index",save_to_file=False):
     graphs,node_mapping = load_4_layers(dataset)
     graph_pairs = graph_combinations+[(g2,g1) for g1,g2 in graph_combinations]+[(i,i) for i in range(len(graphs))]
@@ -223,4 +261,5 @@ def drawGraphs(graphs,color_attribute=None,aggregated=False,save_to_file=False,m
     else:
         plt.show()
 
+histogramMetricSingle("bms")
         

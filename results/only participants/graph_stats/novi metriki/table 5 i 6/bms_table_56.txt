@@ -1,0 +1,21 @@
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in}
+\caption{{\bf Caption}}
+\begin{tabular}{|l|l|l|l|}
+\hline
+{\bf bms}&{\bf oi1}&{\bf Reciprocity}&{\bf oi2}\\ \hline
+{ strong OFF->strong ON}&{ 0.568}&{ 0.447}&{ 0.524}\\ \hline
+{ weak OFF->weak ON}&{ 0.427}&{ 0.160}&{ 0.512}\\ \hline
+{ strong OFF->weak OFF}&{ 0.025}&{ 0.091}&{ 0.005}\\ \hline
+{ strong ON->weak ON}&{ 0.028}&{ 0.081}&{ 0.006}\\ \hline
+{ strong->weak}&{ 0.195}&{ 0.175}&{ 0.180}\\ \hline
+{ OFF->ON}&{ 0.735}&{ 0.434}&{ 0.775}\\ \hline
+{ strong ON->strong OFF}&{ 0.568}&{ 0.429}&{ 0.524}\\ \hline
+{ weak ON->weak OFF}&{ 0.427}&{ 0.165}&{ 0.512}\\ \hline
+{ weak OFF->strong OFF}&{ 0.025}&{ 0.121}&{ 0.005}\\ \hline
+{ weak ON->strong ON}&{ 0.028}&{ 0.122}&{ 0.006}\\ \hline
+{ weak->strong}&{ 0.195}&{ 0.207}&{ 0.180}\\ \hline
+{ ON->OFF}&{ 0.735}&{ 0.433}&{ 0.775}\\ \hline
+\end{tabular}
+\end{adjustwidth}
+\end{table}

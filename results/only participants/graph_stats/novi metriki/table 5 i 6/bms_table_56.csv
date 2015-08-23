@@ -1,0 +1,13 @@
+bms,oi1,Reciprocity,oi2
+strong OFF->strong ON,0.568,0.447,0.524
+weak OFF->weak ON,0.427,0.160,0.512
+strong OFF->weak OFF,0.025,0.091,0.005
+strong ON->weak ON,0.028,0.081,0.006
+strong->weak,0.195,0.175,0.180
+OFF->ON,0.735,0.434,0.775
+strong ON->strong OFF,0.568,0.429,0.524
+weak ON->weak OFF,0.427,0.165,0.512
+weak OFF->strong OFF,0.025,0.121,0.005
+weak ON->strong ON,0.028,0.122,0.006
+weak->strong,0.195,0.207,0.180
+ON->OFF,0.735,0.433,0.775
