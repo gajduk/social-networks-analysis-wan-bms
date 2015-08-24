@@ -102,15 +102,7 @@ def getStasForDataset(dataset="wan"):
     
     return res 
 
-def get56TablesForDataset(dataset="wan"):
-    graphs,node_mapping = load_4_layers(dataset)
-    metrics = {"Reciprocity":reciprocity,"oi1":oi1,"oi2":oi2}
-    #sOff,sON | wOff,wON | sOff,wOFF | sOn,wON | s,w | Off,ON
-    temp = [(0,3),(1,4),(0,1),(3,4),(6,7),(2,5)]
-    temp = temp+[(k,i) for i,k in temp]
-    addMetricsAsAttributesMultiplex(graphs,temp,metrics)
-    res = getGlobalStatsFromAttribute(graphs,temp,metrics)
-    return res 
+
     
 def getSingleStatsForDataset(dataset="wan"):
     graphs,node_mapping = load_4_layers(dataset)
