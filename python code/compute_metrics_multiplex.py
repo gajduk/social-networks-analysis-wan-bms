@@ -156,6 +156,8 @@ return
 def tc2(g1,g2,i):
     res = 0.0
     for h in _n(i,g1.in_edges):
+        if JS(_n(i,g1.out_edges),_n(h,g2.in_edges)) is None:
+            return None
         res += JS(_n(i,g1.out_edges),_n(h,g2.in_edges))
     if len(_n(i,g1.in_edges)) == 0.0:
         return None
@@ -196,6 +198,8 @@ return
 def tp2(g1,g2,i):
     res = 0.0
     for j in _n(i,g1.out_edges):
+        if JS(_n(i,g1.out_edges),_n(j,g2.out_edges)) is None:
+            return None
         res += JS(_n(i,g1.out_edges),_n(j,g2.out_edges))
     if len(_n(i,g1.out_edges)) == 0.0:
         return None
@@ -260,13 +264,16 @@ The metric is calculated for all nodes in g1, using g1 and g2
 """
 def addMetricAsAttributeMultiplex(g1,g2,metric):
     for_node = getMetricMultiplex(g1,g2,metric)
+    print metric
+    print for_node
+    print "VMRO"
     l = [for_node[key] for key in range(g1.number_of_nodes())]
     s = getMetricString(metric,g1,g2)
     g1.graph[s] = l
     global_value = 0.0
     count = 0.0
-    for x in for_node:
-        if x == None:
+    for x in l:
+        if x is None:
             continue
         count += 1.0
         global_value += x
