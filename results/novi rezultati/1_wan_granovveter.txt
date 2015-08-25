@@ -1,0 +1,10 @@
+There are a total of 4811 strong wedges out of which:
+	39.243 percent are closed by another strong link
+	45.022 are closed by a weak link
+	84.265 are closed by any link
+
+
+There are a total of 25424 weak wedges out of which:
+	14.301 percent are closed by a strong link
+	23.450 are closed by another weak link
+	37.752 are closed by any link
