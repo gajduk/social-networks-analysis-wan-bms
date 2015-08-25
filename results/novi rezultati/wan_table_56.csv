@@ -1,0 +1,13 @@
+wan,Reciprocity,tc2,tp2
+strong OFF->strong ON,0.411,0.127,0.138
+weak OFF->weak ON,0.072,0.038,0.057
+strong OFF->weak OFF,0.071,0.054,0.056
+strong ON->weak ON,0.062,0.042,0.047
+strong->weak,0.132,0.086,0.095
+OFF->ON,0.334,0.117,0.181
+strong ON->strong OFF,0.362,0.130,0.138
+weak ON->weak OFF,0.067,0.040,0.047
+weak OFF->strong OFF,0.110,0.041,0.070
+weak ON->strong ON,0.135,0.039,0.065
+weak->strong,0.209,0.073,0.103
+ON->OFF,0.306,0.118,0.180

@@ -1,0 +1,13 @@
+bms,Reciprocity,tc2,tp2
+strong OFF->strong ON,0.417,0.136,0.148
+weak OFF->weak ON,0.160,0.032,0.037
+strong OFF->weak OFF,0.091,0.061,0.065
+strong ON->weak ON,0.081,0.052,0.059
+strong->weak,0.175,0.093,0.102
+OFF->ON,0.434,0.141,0.182
+strong ON->strong OFF,0.406,0.145,0.136
+weak ON->weak OFF,0.165,0.038,0.042
+weak OFF->strong OFF,0.116,0.040,0.061
+weak ON->strong ON,0.098,0.046,0.064
+weak->strong,0.207,0.075,0.098
+ON->OFF,0.433,0.139,0.179
